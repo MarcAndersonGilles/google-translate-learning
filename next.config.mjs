@@ -6,6 +6,16 @@ const withNextIntl = createNextIntlPlugin(
 
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {};
+const nextConfig = {
+    env: {
+        GOOGLE_TRANSLATION_CONFIG: JSON.stringify({
+          languages: [
+            { title: "English", name: "en" },
+            { title: "Français", name: "fr" },
+          ],
+          defaultLanguage: "en",
+        }),
+      },
+};
 
 export default withNextIntl(nextConfig);

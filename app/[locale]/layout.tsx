@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
-import { locales } from '@/navigation'
+import { locales } from '@/navigation';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: {locale}
+  params: { locale }
 }: {
   children: React.ReactNode;
-  params: {locale: string};
+  params: { locale: string };
 }) {
   if (!locales.includes(locale)) {
     notFound();
@@ -25,12 +25,17 @@ export default function RootLayout({
 
   const messages = useMessages();
 
-  console.log(locale)
+  console.log(locale);
   return (
     <html lang={locale}>
-      <NextIntlClientProvider locale={locale} messages={messages}>
-      <body className="bg-red-100" >{children}</body>
-      </NextIntlClientProvider>
+      <head>
+
+      </head>
+      <body className="bg-red-100">
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

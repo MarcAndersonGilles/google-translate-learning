@@ -3,3 +3,4 @@
 @tailwind utilities;
 
 
+iframe.skiptranslate { display: "none !important"; }
