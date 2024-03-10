@@ -40,7 +40,7 @@ export default function Home({params: {locale}}:{params:{locale:string}}) {
       <div className='absolute  top-0 right-0 p-5 bg-gray-50'>
       {/* <LanguageChanger locale={locale} /> */}
       {/* <LanguageSwitcher /> */}
-      <GoogleTranslate prefLangCookie={getPrefLangCookie()}/>
+      <GoogleTranslate prefLangCookie={locale}/>
       </div>
     
       </>

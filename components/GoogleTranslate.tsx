@@ -3,6 +3,27 @@ import { usePathname, useRouter } from "@/navigation";
 import Script from "next/script";
 import React, { ChangeEvent } from "react";
 
+declare global {
+    interface Window {
+      googleTranslateElementInit: () => void;
+    }
+  }
+
+  declare global {
+    interface Window {
+      google: {
+        translate: {
+          TranslateElement: {
+            new (options: {
+              pageLanguage: string;
+              includedLanguages: string;
+            }, id: string): void;
+          };
+        };
+      };
+    }
+  }
+  
 const languages = [
   { label: "English", value: "en", src: "https://flagcdn.com/h60/us.png" },
   { label: "Français", value: "fr", src: "https://flagcdn.com/h60/us.png" },
@@ -20,7 +41,7 @@ function googleTranslateElementInit() {
 export function GoogleTranslate({ prefLangCookie }: { prefLangCookie: string }) {
 console.log(prefLangCookie)
     const [langCookie, setLangCookie] = React.useState(decodeURIComponent(prefLangCookie));
-
+console.log(langCookie)
 
    
   
@@ -29,14 +50,17 @@ console.log(prefLangCookie)
     }, []);
   
     const onChange = (value: string) => {
-      const lang = "/en/" + value;
+      const lang =  value;
       setLangCookie(lang);
+      console.log(langCookie)
       console.log(lang)
-      const element = document.querySelector(".goog-te-combo");
-      element.value = value;
-      console.log(element.value )
-      element.dispatchEvent(new Event("change"));
-     
+      const element = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;;
+      console.log(element)
+      
+      element!.value = value;
+      console.log(element!.value )
+      element!.dispatchEvent(new Event("change"));
+   
     };
 
     
@@ -53,7 +77,7 @@ console.log(prefLangCookie)
     );
   };
   
-  function LanguageSelector({ onChange, value }) {
+  function LanguageSelector({ onChange, value }: {onChange: (value: string) => void, value: string}) {
 
 
     const router = useRouter();
