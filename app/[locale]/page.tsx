@@ -1,3 +1,4 @@
+import LanguageChanger from '@/components/LanguageChanger';
 import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
 
@@ -20,16 +21,24 @@ const arrayOfItems = [
 ];
 
 
-export default function Home() {
+export default function Home({params: {locale}}:{params:{locale:string}}) {
+  console.log(locale)
+
   const t = useTranslations('Index');
   return (
-    <main className="flex  min-h-screen p-24">
+    <main className="flex  min-h-screen p-24 relative">
+
+      <>
+      <div className='absolute  top-0 right-0 p-10 bg-gray-50'>
+      <LanguageChanger locale={locale} />
+      </div>
+      </>
       <div className="flex flex-col gap-10   w-full items-center  font-mono text-sm lg:flex">
 
         <div className="bg-red-500 p-5 text-white">Hello, my name is Bob</div>
 
-        <div className='flex flex-col'>
-          <h1>{t('title')}</h1>;
+        <div className='flex flex-col gap-4'>
+          <h1>{t('title')}</h1>
           <div className='flex flex-col gap-3'>
             {arrayOfItems.map((item, index) => (
               <Fragment key={index}>

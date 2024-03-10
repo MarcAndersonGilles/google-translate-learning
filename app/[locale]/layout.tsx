@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { NextIntlClientProvider, useMessages } from "next-intl";
+import { notFound } from "next/navigation";
+import { locales } from '@/navigation'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,9 +19,18 @@ export default function RootLayout({
   children: React.ReactNode;
   params: {locale: string};
 }) {
+  if (!locales.includes(locale)) {
+    notFound();
+  }
+
+  const messages = useMessages();
+
+  console.log(locale)
   return (
     <html lang={locale}>
-      <body className={inter.className}>{children}</body>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+      <body className="bg-red-100" >{children}</body>
+      </NextIntlClientProvider>
     </html>
   );
 }
